@@ -1,0 +1,47 @@
+from ib_insync import *
+
+
+ib = IB()
+
+# us this for TWS (Workstation)
+ib.connect("127.0.0.1", 7497, clientId=1)
+
+option = Option("SPY", "20220112", 370, "C", "SMART")
+# requesting historical market data
+bars = ib.reqHistoricalData(
+    option,
+    endDateTime="",
+    durationStr="30 D",
+    barSizeSetting="1 hour",
+    whatToShow="MIDPOINT",
+    useRTH=True,
+)
+
+# convert to pandas dataframe
+df = util.df(bars)
+print(df)
+
+# placing order
+order = LimitOrder("buy", 3, 380)
+trade = ib.placeOrder(option, order)
+
+# call back function to check if the order is filled
+def orderFilled(trade, fill):
+    print("order has been filled")
+    print(trade)
+    print(fill)
+
+
+trade.fillEvent += orderFilled
+
+ib.sleep(3)
+
+for trade in ib.trades():
+    print(" ----------- Trades ------------- ")
+    print(trade)
+
+for order in ib.orders():
+    print(" ----------- Orders ------------- ")
+    print(order)
+
+ib.run()
