@@ -22,3 +22,18 @@ The price of an option may be impacted by a variety of variables, which can assi
 - Vega: The rate of change of the option price respected to the volatility of the underlying asset.
 - Rho: The rate of the option price respected to the interest rate.
 - Theta: The rate of change of the option price respected to the passage of time.
+
+# Monte Carlo simulation
+Monte-Carlo simulation is a computerised mathematical approach that permits quantitative analysis to account for risk. Furthermore, they are a vast category of computer algorithms that produce numerical results by repeated random sampling. The basic idea is to utilize randomness to solve problems that are in essence deterministic.
+
+Financial derivatives such as options are dependent on the underlying asset, stocks which follows a Brownian motion or Wiener process. So, by simulating these stochastic processes we could determine the prices of financial instrument(option in this case)
+<div align="center" ><img width="254" alt="Screen Shot 2022-01-12 at 10 34 38 PM" src="https://user-images.githubusercontent.com/74301587/149261334-551ab483-5d2d-4e64-a252-f571697ccc57.png"></div>
+Now we could obtain the log S(t) because we know that stock prices can not be negative. By Ito's lemma we could say that F(S) = log S(t)
+<div align="center" ><img width="275" alt="Screen Shot 2022-01-12 at 10 40 16 PM" src="https://user-images.githubusercontent.com/74301587/149261813-008eb29c-c5ab-41c7-b938-0e788f9f26c9.png"></div>
+<div align="center" ><img width="354" alt="Screen Shot 2022-01-12 at 10 41 10 PM" src="https://user-images.githubusercontent.com/74301587/149261891-227d1ac5-c514-4a81-8c8c-cb85477e72dc.png"></div>
+
+Here the Brownian motion is a random walk with mean 0 and variance t so, N(0,t) which could be re-writen as √t N(0,1)
+Now, if we make a risk-netural assumption the μ drift becomes r risk-free interest rate and we get
+<div align="center" ><img width="315" alt="Screen Shot 2022-01-12 at 10 50 25 PM" src="https://user-images.githubusercontent.com/74301587/149262718-7cd60150-5ec5-4cb9-bfce-e4c5bb9d4b48.png"></div>
+The exponential function defined stock price at T maturity
+For a call option we would calculate max(S - E, 0) and for a put option we would calculate max(E - S, 0)
